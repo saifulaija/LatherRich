@@ -1,0 +1,83 @@
+import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { ProductServices } from './product.service';
+
+
+const createProduct = catchAsync(async (req, res) => {
+  const result = await ProductServices.createProductIntoDB(
+    req.body,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'product is created successfully',
+    data: result,
+  });
+});
+
+const getAllProdycts = catchAsync(async (req, res) => {
+  const result = await ProductServices.getAllProductsFromDB(
+    req.query,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'products are retrieved successfully',
+    meta: result.meta,
+    data: result.result,
+  });
+});
+
+const getSingleProduct = catchAsync(async (req, res) => {
+  const { facultyId } = req.params;
+
+  const result =
+    await ProductServices.getSingleProductFromDB(facultyId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'product  is retrieved successfully',
+    data: result,
+  });
+});
+const getAllProductsByCategory = catchAsync(async (req, res) => {
+  const category = req.params.category;
+console.log('category', category)
+  const result =
+    await ProductServices.getAllProductsByCategoryFromDB(category);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'category product  is retrieved successfully',
+    data: result,
+  });
+});
+
+const updateProduct = catchAsync(async (req, res) => {
+  const { facultyId } = req.params;
+  const result = await ProductServices.updateProductIntoDB(
+    facultyId,
+    req.body,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'product is updated successfully',
+    data: result,
+  });
+});
+
+export const ProductControllers = {
+  createProduct,
+  getAllProdycts,
+  updateProduct,
+  getSingleProduct,
+  getAllProductsByCategory
+
+};
