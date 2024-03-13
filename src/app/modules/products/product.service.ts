@@ -4,6 +4,7 @@ import { TProduct } from './product.interface';
 import { Product } from './product.model';
 
 const createProductIntoDB = async (payload: TProduct) => {
+  console.log('product', payload)
   const result = await Product.create(payload);
   return result;
 };
@@ -25,13 +26,15 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
+
+
 const getSingleProductFromDB = async (id: string) => {
-  const result = await Product.findById(id);
+  const result = await Product.findById({_id:id});
   return result;
 };
 const getAllProductsByCategoryFromDB = async (category: string) => {
     console.log(category)
-  const result = await Product.find({category:category});
+  const result = await Product.find({subCategory:category});
   return result;
 };
 

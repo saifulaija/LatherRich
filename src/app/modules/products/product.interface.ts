@@ -1,6 +1,6 @@
 export type TProductSizeStok = {
   size: string;
-  stok: number;
+  stock: number;
 };
 
 export type TProduct = {
@@ -8,12 +8,18 @@ export type TProduct = {
   category: string;
   price: number;
   description: string;
-  image: string;
+  images: string[];
+  model:string;
+  material:string;
   reviews?: string;
   tag?: string;
   isDeleted: boolean;
   rating?: number;
   sellsQuantity?: number;
+  subCategory:string;
   discount?: number;
   sizeStok: TProductSizeStok[];
+  selectedSize?:string
 };
+
+

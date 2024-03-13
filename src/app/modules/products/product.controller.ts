@@ -32,10 +32,10 @@ const getAllProdycts = catchAsync(async (req, res) => {
 });
 
 const getSingleProduct = catchAsync(async (req, res) => {
-  const { facultyId } = req.params;
+  const { id } = req.params;
 
   const result =
-    await ProductServices.getSingleProductFromDB(facultyId);
+    await ProductServices.getSingleProductFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

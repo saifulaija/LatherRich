@@ -3,7 +3,7 @@ import { TProduct, TProductSizeStok } from './product.interface';
 
 const productSizeSchema = new Schema<TProductSizeStok>({
   size: String,
-  stok: Number,
+  stock: Number,
 });
 
 const productSchema = new Schema<TProduct>(
@@ -24,11 +24,14 @@ const productSchema = new Schema<TProduct>(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
+    images: {
+      type: [String],
       required: true,
     },
     reviews: {
+      type: String,
+    },
+    subCategory: {
       type: String,
     },
     rating: {
@@ -48,8 +51,13 @@ const productSchema = new Schema<TProduct>(
     tag: {
       type: String,
     },
-   sizeStok : [productSizeSchema],
+    sizeStok: [productSizeSchema],
+    selectedSize:{
+      type:String,
+      default:'0'
+    }
   },
+  
 
   {
     timestamps: true,

@@ -21,7 +21,7 @@ router.get(
   );
 
 router.get(
-  '/:id',
+  '/get-single-product/:id',
 
   ProductControllers.getSingleProduct,
 );
