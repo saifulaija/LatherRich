@@ -6,12 +6,12 @@ import { orderController } from './order.controller';
 
 const router = express.Router();
 
+router.get('/get-single-order/:id', orderController.getSingleOrder);
 router.post(
   '/create-order',
   orderController.createOrder,
 );
 router.get('/get-all-orders/', orderController.getAllOrders);
-router.get('/get-single-order/:id', orderController.getSingleOrder);
 // router.put(
 //   '/product/:productId',
 //   validateRequest(ProductValidation.updateProductValidation),

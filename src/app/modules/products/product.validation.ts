@@ -28,9 +28,9 @@ const CreateProductValidationSchema = z.object({
 
     reviews: z.string().optional(),
     rating: z.number().optional(),
-    sellsQuantity: z.number(),
+    sellsQuantity: z.number().optional(),
     discount: z.number().optional(),
-    isDeleted: z.boolean(),
+    isDeleted: z.boolean().optional(),
     tag: z.string().optional(),
     sizeStok: z.array(productSizeSchema),
     selectedSize:z.string().optional(),

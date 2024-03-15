@@ -19,6 +19,7 @@ const getAllOrdersFromDB = async () => {
 
 
 const getSingleOrderFromDB = async (id: string) => {
+  console.log(id)
  
   const result = await Order.findOne({orderNumber:id});
   return result;

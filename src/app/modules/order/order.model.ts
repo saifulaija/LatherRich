@@ -32,6 +32,10 @@ const OrderSchema = new Schema<TOrder>({
     type: String,
     required: true,
   },
+ paymentSystem: {
+    type: String,
+    required: true,
+  },
   totalPrice: {
     type: Number,
     required: true,

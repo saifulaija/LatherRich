@@ -13,7 +13,7 @@ export type TProduct = {
   material:string;
   reviews?: string;
   tag?: string;
-  isDeleted: boolean;
+  isDeleted?: boolean;
   rating?: number;
   sellsQuantity?: number;
   subCategory:string;
