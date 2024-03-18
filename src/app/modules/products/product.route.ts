@@ -14,11 +14,19 @@ router.post(
   ProductControllers.createProduct,
 );
 
-router.get(
-    '/:category',
-  
-    ProductControllers.getAllProductsByCategory,
-  );
+
+router.patch(
+  '/delete-product/:id', ProductControllers.deleteProduct
+ 
+);
+router.patch(
+  '/update-product/:id', ProductControllers.updateProduct
+ 
+);
+
+
+
+
 
 router.get(
   '/get-single-product/:id',
@@ -26,19 +34,20 @@ router.get(
   ProductControllers.getSingleProduct,
 );
 
-// router.patch(
-//   '/:id',
-//   auth(USER_ROLE.superAdmin, USER_ROLE.admin),
-//   validateRequest(
-//     AcademicFacultyValidation.updateAcademicFacultyValidationSchema,
-//   ),
-//   AcademicFacultyControllers.updateAcademicFaculty,
-// );
+
 
 router.get(
   '/',
 
   ProductControllers.getAllProdycts,
+);
+
+
+
+router.get(
+  '/category/:category',
+
+  ProductControllers.getAllProductsByCategory,
 );
 
 

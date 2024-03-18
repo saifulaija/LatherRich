@@ -51,6 +51,14 @@ const productSchema = new Schema<TProduct>(
     tag: {
       type: String,
     },
+    model:{
+      type:String,
+      required:true
+    },
+    material:{
+      type:String,
+      required:true
+    },
     sizeStok: [productSizeSchema],
     selectedSize:{
       type:String,
