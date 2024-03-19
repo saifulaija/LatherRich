@@ -33,33 +33,33 @@ const getSingleProductFromDB = async (id: string) => {
   return result;
 };
 
-const getAllProductsByCategoryFromDB = async (category: string) => {
-  let result;
+// const getAllProductsByCategoryFromDB = async (category: string) => {
+//   let result;
 
-  const products = await Product.find();
+//   const products = await Product.find();
 
-  const field = products.some((product) => product.category === category)
-    ? 'category'
-    : products.some((product) => product.subCategory === category)
-      ? 'subCategory'
-      : 'productType';
+//   const field = products.some((product) => product.category === category)
+//     ? 'category'
+//     : products.some((product) => product.subCategory === category)
+//       ? 'subCategory'
+//       : 'productType';
 
-  switch (field) {
-    case 'category':
-      result = await Product.find({ category });
-      break;
-    case 'subCategory':
-      result = await Product.find({ subCategory: category });
-      break;
-    case 'productType':
-      result = await Product.find({ productType: category });
-      break;
-    default:
-      throw new Error('Invalid field');
-  }
+//   switch (field) {
+//     case 'category':
+//       result = await Product.find({ category });
+//       break;
+//     case 'subCategory':
+//       result = await Product.find({ subCategory: category });
+//       break;
+//     case 'productType':
+//       result = await Product.find({ productType: category });
+//       break;
+//     default:
+//       throw new Error('Invalid field');
+//   }
 
-  return result;
-};
+//   return result;
+// };
 
 
 
@@ -69,53 +69,53 @@ const getAllProductsByCategoryFromDB = async (category: string) => {
 
 
 
-// const getAllProductsByCategoryFromDB = async (category: string) => {
-//   let result;
+const getAllProductsByCategoryFromDB = async (category: string) => {
+  let result;
 
-//   // Determine the field based on the presence of category, subCategory, or productType in any product
-//   const field = (await Product.exists({ category }))
-//     ? 'category'
-//     : (await Product.exists({ subCategory: category }))
-//     ? 'subCategory'
-//     : 'productType';
+  // Determine the field based on the presence of category, subCategory, or productType in any product
+  const field = (await Product.exists({ category }))
+    ? 'category'
+    : (await Product.exists({ subCategory: category }))
+    ? 'subCategory'
+    : 'productType';
 
-//   // Build the query based on the determined field
-//   let query = {};
-//   switch (field) {
-//     case 'category':
-//       query = { category };
-//       break;
-//     case 'subCategory':
-//       query = { subCategory: category };
-//       break;
-//     case 'productType':
-//       query = { productType: category };
-//       break;
-//     default:
-//       throw new Error('Invalid field');
-//   }
+  // Build the query based on the determined field
+  let query = {};
+  switch (field) {
+    case 'category':
+      query = { category };
+      break;
+    case 'subCategory':
+      query = { subCategory: category };
+      break;
+    case 'productType':
+      query = { productType: category };
+      break;
+    default:
+      throw new Error('Invalid field');
+  }
 
-//   // Execute the query using the QueryBuilder pattern
-//   const productQuery = new QueryBuilder(
-//     Product.find().where(query), // Pass both the initial query and the query object
-//     {}
-//   )
-//     .search(productSearchableFields)
-//     .filter()
-//     .sort()
-//     .paginate()
-//     .fields();
+  // Execute the query using the QueryBuilder pattern
+  const productQuery = new QueryBuilder(
+    Product.find().where(query), // Pass both the initial query and the query object
+    {}
+  )
+    .search(productSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-//   // Execute the model query
-//   const { modelQuery } = productQuery;
-//   result = await modelQuery;
+  // Execute the model query
+  const { modelQuery } = productQuery;
+  result = await modelQuery;
 
-//   // Count total records for pagination
-//   const meta = await productQuery.countTotal();
+  // Count total records for pagination
+  const meta = await productQuery.countTotal();
 
-//   // Return the result along with meta information
-//   return { meta, result };
-// };
+  // Return the result along with meta information
+  return { meta, result };
+};
 
 
 

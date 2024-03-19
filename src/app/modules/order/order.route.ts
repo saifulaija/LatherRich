@@ -11,7 +11,8 @@ router.post(
   '/create-order',
   orderController.createOrder,
 );
-router.get('/get-all-orders/', orderController.getAllOrders);
+router.get('/', orderController.getAllOrders);
+router.patch('/update-delivery/:id', orderController.updateOrder);
 // router.put(
 //   '/product/:productId',
 //   validateRequest(ProductValidation.updateProductValidation),
