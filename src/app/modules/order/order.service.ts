@@ -14,25 +14,22 @@ const getAllOrdersFromDB = async () => {
 };
 
 const getSingleOrderFromDB = async (id: string) => {
+  
+
+  const result = await Order.findById(id);
+  return result;
+};
+const getSingleOrderByOrderNumberFromDB = async (id: string) => {
   console.log(id);
 
   const result = await Order.findOne({ orderNumber: id });
   return result;
 };
 
-// const updateOrderIntoDB = async (id: string, payload: Partial<TOrder>) => {
-//   console.log(payload, id);
 
-//   const result = await Order.findOneAndUpdate(
-//     { id },
-//     {
-//       deliveryStatus: payload,
-//     },
-//     { new: true },
-//   );
 
-//   return result;
-// };
+
+
 
 
 const updateOrderIntoDB = async (id: string, payload: Partial<TOrder>) => {
@@ -54,4 +51,5 @@ export const orderServices = {
   getSingleOrderFromDB,
   createOrderIntoDB,
   updateOrderIntoDB,
+  getSingleOrderByOrderNumberFromDB 
 };

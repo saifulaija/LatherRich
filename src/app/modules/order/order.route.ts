@@ -6,7 +6,8 @@ import { orderController } from './order.controller';
 
 const router = express.Router();
 
-router.get('/get-single-order/:id', orderController.getSingleOrder);
+router.get('/success-order/:id', orderController.getSingleOrderByOrderNumber);
+
 router.post(
   '/create-order',
   orderController.createOrder,
@@ -22,6 +23,7 @@ router.patch('/update-delivery/:id', orderController.updateOrder);
 //for stripe
 
 router.post('/create-checkout-session')
+router.get('/get-single-order/:id', orderController.getSingleOrder);
 
 // router.delete('/product/:productId', ProductController.deleteProduct);
 
