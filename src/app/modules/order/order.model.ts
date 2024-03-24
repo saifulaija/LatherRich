@@ -3,6 +3,7 @@ import { TOrder, TProductOrder } from './order.interface';
 const ProductItemSchema = new Schema<TProductOrder>({
   productId: {
     type: Schema.Types.ObjectId,
+    
     required: true,
   },
   selectedQuantity: {
@@ -12,6 +13,18 @@ const ProductItemSchema = new Schema<TProductOrder>({
   image: {
     type: String,
     required: true,
+  },
+  size:{
+    type:String,
+    required:true
+  },
+  discount:{
+  type:Number,
+  required:true
+  },
+  name:{
+  type:String,
+  required:true
   },
   price: {
     type: Number,
@@ -24,6 +37,7 @@ const OrderSchema = new Schema<TOrder>({
     type: String,
     required: true,
   },
+  
   buyerEmail: {
     type: String,
     required: true,

@@ -1,16 +1,26 @@
 import { Schema, model } from 'mongoose';
-import { TProduct, TProductSizeStok } from './product.interface';
+import { TProduct, TProductSizeStok, Treviews } from './product.interface';
 
 const productSizeSchema = new Schema<TProductSizeStok>({
   size: String,
   stock: Number,
 });
+const reviewSchema = new Schema<Treviews>({
+  reviewId:{
+    type:Schema.Types.ObjectId,
+    ref:"Review"
+  }
+})
 
 const productSchema = new Schema<TProduct>(
   {
     name: {
       type: String,
       required: true,
+    },
+    productType:{
+      type:String,
+      required:true
     },
     category: {
       type: String,
@@ -28,21 +38,25 @@ const productSchema = new Schema<TProduct>(
       type: [String],
       required: true,
     },
-    reviews: {
-      type: String,
-    },
+    reviews: [
+      reviewSchema
+    ],
     subCategory: {
       type: String,
     },
-    rating: {
-      type: Number,
-    },
+   
     sellsQuantity: {
       type: Number,
       default: 0,
     },
     discount: {
       type: Number,
+      default:0
+    },
+    productCode:{
+      type:String,
+      default:'shoe-09',
+      required:true
     },
     isDeleted: {
       type: Boolean,

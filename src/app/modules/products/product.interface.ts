@@ -1,6 +1,12 @@
+import { Types } from 'mongoose';
+
 export type TProductSizeStok = {
   size: string;
   stock: number;
+};
+
+export type Treviews = {
+  reviewId: Types.ObjectId;
 };
 
 export type TProduct = {
@@ -9,17 +15,16 @@ export type TProduct = {
   price: number;
   description: string;
   images: string[];
-  model:string;
-  material:string;
-  reviews?: string;
+  model: string;
+  material: string;
+  productType: string;
   tag?: string;
+  productCode?: string;
   isDeleted?: boolean;
-  rating?: number;
+  reviews?: Treviews[];
   sellsQuantity?: number;
-  subCategory:string;
+  subCategory: string;
   discount?: number;
   sizeStok: TProductSizeStok[];
-  selectedSize?:string
+  selectedSize?: string;
 };
-
-

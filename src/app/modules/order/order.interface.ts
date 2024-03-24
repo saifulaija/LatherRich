@@ -5,6 +5,9 @@ export type TProductOrder = {
   selectedQuantity: number;
   image: string;
   price: number;
+  name:string,
+  discount:number,
+  size:string
 };
 
 export type TOrder = {

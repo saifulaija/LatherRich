@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
 import { productSearchableFields } from './product.constant';
 import { TProduct } from './product.interface';
@@ -28,46 +29,32 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
-const getSingleProductFromDB = async (id: string) => {
-  const result = await Product.findById({ _id: id });
-  return result;
+const getSingleProductFromDB = async () => {
+  try {
+    const result = await Product.aggregate([
+      // 1st stage: Lookup reviews collection
+      {
+        $lookup: {
+          from: 'reviews',
+          localField: 'reviews.reviewId',
+          foreignField: '_id',
+          as: 'reviews',
+        },
+      },
+      // 2nd stage: Calculate average rating
+      {
+        $addFields: {
+          averageRating: { $avg: '$reviews.rating' },
+        },
+      },
+    ]);
+
+    return result;
+  } catch (error) {
+    console.error('Error fetching products and reviews:', error);
+    throw error;
+  }
 };
-
-// const getAllProductsByCategoryFromDB = async (category: string) => {
-//   let result;
-
-//   const products = await Product.find();
-
-//   const field = products.some((product) => product.category === category)
-//     ? 'category'
-//     : products.some((product) => product.subCategory === category)
-//       ? 'subCategory'
-//       : 'productType';
-
-//   switch (field) {
-//     case 'category':
-//       result = await Product.find({ category });
-//       break;
-//     case 'subCategory':
-//       result = await Product.find({ subCategory: category });
-//       break;
-//     case 'productType':
-//       result = await Product.find({ productType: category });
-//       break;
-//     default:
-//       throw new Error('Invalid field');
-//   }
-
-//   return result;
-// };
-
-
-
-
-// Import the Product model
-
-
-
 
 const getAllProductsByCategoryFromDB = async (category: string) => {
   let result;
@@ -76,8 +63,8 @@ const getAllProductsByCategoryFromDB = async (category: string) => {
   const field = (await Product.exists({ category }))
     ? 'category'
     : (await Product.exists({ subCategory: category }))
-    ? 'subCategory'
-    : 'productType';
+      ? 'subCategory'
+      : 'productType';
 
   // Build the query based on the determined field
   let query = {};
@@ -98,7 +85,7 @@ const getAllProductsByCategoryFromDB = async (category: string) => {
   // Execute the query using the QueryBuilder pattern
   const productQuery = new QueryBuilder(
     Product.find().where(query), // Pass both the initial query and the query object
-    {}
+    {},
   )
     .search(productSearchableFields)
     .filter()
@@ -116,10 +103,6 @@ const getAllProductsByCategoryFromDB = async (category: string) => {
   // Return the result along with meta information
   return { meta, result };
 };
-
-
-
-
 
 const updateProductIntoDB = async (id: string, payload: Partial<TProduct>) => {
   const { sizeStok, ...remainingProductData } = payload;
