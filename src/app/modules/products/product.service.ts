@@ -29,9 +29,11 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
-const getSingleProductFromDB = async () => {
+const getSingleProductFromDB = async (id:string) => {
   try {
     const result = await Product.aggregate([
+      {$match: {_id:new mongoose.Types.ObjectId(id)}},
+
       // 1st stage: Lookup reviews collection
       {
         $lookup: {
