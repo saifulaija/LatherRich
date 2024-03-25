@@ -1,5 +1,7 @@
 
 
+import httpStatus from "http-status";
+import AppError from "../../errors/AppError";
 import { Product } from "../products/product.model";
 import { TReview } from "./review.interface";
 import { Review } from "./review.model";
@@ -40,38 +42,84 @@ const getAllReviews=async()=>{
 
 
 
-const deleteReview = async ( reviewId) => {
-    try {
 
-        const reviews=await Review.findById()
-        // Find the product by its ID
-        const product = await Product.findById(reviews?.productId);
-        
-        if (!product) {
-            throw new Error("Product not found");
-        }
 
-        // Find the index of the review in the product's reviews array
-        const reviewIndex = product.reviews.findIndex(review => review._id.toString() === reviewId);
 
-        // If review is not found, throw an error
-        if (reviewIndex === -1) {
-            throw new Error("Review not found");
-        }
+// const deleteReview = async (id: string) => {
+//   // Find the review
+//   const review = await Review.findById(id);
 
-        // Remove the review from the reviews array
-        product.reviews.splice(reviewIndex, 1);
+//   if (!review) {
+//       console.log('Review not found');
+//       return;
+//   }
 
-        // Save the updated product document
-        await product.save();
+//   // Find the associated product
+//   const product = await Product.findById(review.productId);
 
-        console.log("Review removed from product:", reviewId);
-        return { success: true, message: "Review removed from product" };
-    } catch (error) {
-        console.error("Error deleting review:", error.message);
-        throw error; // Propagate the error to the caller
-    }
-};
+//   if (!product) {
+//       console.log('Product not found');
+//       return;
+//   }
+
+//   // Find the index of the review in the product's reviews array
+//   const reviewIndex = product?.reviews?.findIndex((item) => item.reviewId.toString() === id);
+
+//   if (reviewIndex === -1) {
+//       console.log('Review not found in product');
+//       return;
+//   }
+
+//   // Remove the review from the product's reviews array
+//   product?.reviews?.splice(reviewIndex, 1);
+
+//   // Save the product
+//   await product.save();
+
+//   // Delete the review document
+//   await Review.findByIdAndDelete(id);
+
+//   console.log('Review deleted successfully');
+// }
+
+
+const deleteReview = async (id: string) => {
+  // Find the review
+  const review = await Review.findById(id);
+
+  if (!review) {
+      throw new AppError(httpStatus.NOT_FOUND,'Review not found')
+  }
+
+  // Find the associated product
+  const product = await Product.findById(review.productId);
+
+  if (!product) {
+    throw new AppError(httpStatus.NOT_FOUND,'Review not found')
+  }
+
+  // Find the index of the review in the product's reviews array
+  const reviewIndex = product?.reviews?.findIndex((item) => item.reviewId.toString() === id);
+
+  if (reviewIndex === -1) {
+    throw new AppError(httpStatus.NOT_FOUND,'Review not found in product')
+  }
+
+  // Remove the review from the product's reviews array
+  if (product.reviews) {
+      product.reviews.splice(reviewIndex as number, 1);
+  }
+
+  // Save the product
+  await product.save();
+
+  // Delete the review document
+ const result =  await Review.findByIdAndDelete(id);
+
+  return result
+}
+
+
 
 
 

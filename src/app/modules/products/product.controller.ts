@@ -40,8 +40,8 @@ const getSingleProduct = catchAsync(async (req, res) => {
 });
 const getAllProductsByCategory = catchAsync(async (req, res) => {
   const category = req.params.category;
-  console.log(category)
- 
+  console.log(category);
+
   const result = await ProductServices.getAllProductsByCategoryFromDB(category);
 
   sendResponse(res, {
@@ -52,17 +52,10 @@ const getAllProductsByCategory = catchAsync(async (req, res) => {
   });
 });
 
-
-
-
-
-
-
-
 const updateProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const  product = req.body;
-  
+  const product = req.body;
+
   const result = await ProductServices.updateProductIntoDB(id, product);
 
   sendResponse(res, {
@@ -91,5 +84,4 @@ export const ProductControllers = {
   getSingleProduct,
   getAllProductsByCategory,
   deleteProduct,
-  
 };
