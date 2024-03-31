@@ -1,4 +1,4 @@
-const createPayment=(payload)=>{
+const createPayment=(payload:string)=>{
     console.log(payload)
 
 }
