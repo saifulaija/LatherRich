@@ -80,6 +80,10 @@ const OrderSchema = new Schema<TOrder>({
     type:String,
     required:true
   }
-});
+},
+{
+  timestamps: true,
+},
+);
 
 export const Order = model<TOrder>('order', OrderSchema);
